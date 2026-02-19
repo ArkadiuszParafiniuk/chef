@@ -98,6 +98,14 @@ public class RecipeService {
             });
   }
 
+  public Recipe incrementCookCount(String recipeUuid) {
+    Recipe recipe = repository.findByUuid(recipeUuid)
+            .orElseThrow(RecipeNotFoundException::new);
+    return repository.save(recipe.toBuilder()
+            .cookCount(recipe.getCookCount() + 1)
+            .build());
+  }
+
   public void delete(String recipeUuid) {
     repository.deleteByUuid(recipeUuid);
   }

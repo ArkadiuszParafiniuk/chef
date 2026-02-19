@@ -35,5 +35,6 @@ public class Recipe {
   TypeOfDish typeOfDish;
   List<String> tags = new ArrayList<>();
   List<Binary> images = new ArrayList<>();
+  int cookCount = 0;
 
 }
