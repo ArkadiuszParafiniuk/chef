@@ -98,6 +98,17 @@ public class RecipeService {
             });
   }
 
+  public void deletePhoto(String recipeUuid, int photoIndex) {
+    Recipe recipe = repository.findByUuid(recipeUuid)
+            .orElseThrow(RecipeNotFoundException::new);
+    List<Binary> images = recipe.getImages();
+    if (photoIndex < 0 || photoIndex >= images.size()) {
+      throw new IndexOutOfBoundsException("Photo index " + photoIndex + " out of range");
+    }
+    images.remove(photoIndex);
+    repository.save(recipe.toBuilder().images(images).build());
+  }
+
   public Recipe incrementCookCount(String recipeUuid) {
     Recipe recipe = repository.findByUuid(recipeUuid)
             .orElseThrow(RecipeNotFoundException::new);

@@ -71,6 +71,15 @@ public class RecipeController {
     return recipeService.incrementCookCount(recipeUuid);
   }
 
+  @DeleteMapping(path = "/{recipeUuid}/photo/{photoIndex}")
+  @CrossOrigin
+  public void deletePhoto(@PathVariable String recipeUuid, @PathVariable int photoIndex) {
+    if (!isRecipeEditEnabled) {
+      throw new RuntimeException("Recipe write is disabled");
+    }
+    recipeService.deletePhoto(recipeUuid, photoIndex);
+  }
+
   @PostMapping(path = "/{recipeUuid}/addPhoto", consumes = "multipart/form-data")
   @CrossOrigin
   public void addPhoto(@PathVariable String recipeUuid, @RequestParam(value = "image") MultipartFile image) {
